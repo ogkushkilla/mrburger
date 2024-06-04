@@ -8,15 +8,16 @@ module.exports = {
     'plugin:react-hooks/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parserOptions: {
-    parser: 'babel-eslint',
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh'],
   rules: {
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
     'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
     'no-console': 'off',
     'no-loop-func': ['error'],
     eqeqeq: ['error', 'always'],
@@ -62,7 +63,6 @@ module.exports = {
         functions: false,
       },
     ],
-    'arrow-body-style': ['error', 'as-needed'],
     'arrow-spacing': ['error'],
     'no-confusing-arrow': [
       'error',
@@ -141,7 +141,7 @@ module.exports = {
     'max-len': [
       'error',
       {
-        code: 180,
+        code: 120,
         tabWidth: 2,
         ignoreUrls: true,
         ignorePattern: 'goog.(module|require)',
@@ -159,7 +159,7 @@ module.exports = {
     'no-new-object': 'error',
     'no-tabs': 'error',
     'no-trailing-spaces': 'error',
-    'object-curly-spacing': 'always',
+    'object-curly-spacing': ['error', 'always'],
     'one-var': [
       'error',
       {

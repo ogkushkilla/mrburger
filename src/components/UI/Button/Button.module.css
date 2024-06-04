@@ -1,0 +1,16 @@
+.button {
+  background-color: #b70e0e;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  outline: none;
+}
+
+.button:hover {
+  background-color: #eb2c2c;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
