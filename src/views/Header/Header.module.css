@@ -1,3 +1,9 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 .menu {
   background-color: #000000;
   padding: 10px 0;

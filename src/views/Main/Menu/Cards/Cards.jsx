@@ -1,10 +1,7 @@
-import { useState } from 'react';
-import classnames from 'classnames';
 import style from './Cards.module.css';
-import { Button } from '../../../../components/UI/Button/Button';
+import { CardItem } from '../CardItem/CardItem';
 
 export const Cards = () => {
-  const [isActive, setActive] = useState('средний');
   const store = {
     positions: [
       {
@@ -59,34 +56,12 @@ export const Cards = () => {
         price: 179,
       },
     ],
-    types: ['средний', 'большой'],
   };
 
   return (
     <div className={style.menu__cards}>
       {store.positions.map((card, i) => (
-        <div key={i} className={style.menu__card}>
-          <img src={card.image} className="card__image" />
-          <h3 className={style.card__title}>{card.name}</h3>
-          <p className={style.card__text}>{card.composition}</p>
-          <div className={style.card__choose}>
-            {store.types.map((type, i) => (
-              <button
-                key={i}
-                className={classnames(style.choosen__type, {
-                  [style.active]: isActive === type,
-                })}
-                onClick={() => setActive(type)}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-          <div className={style.card__value}>
-            <span className={style.card__price}>{isActive === store.types[0] ? card.price : card.price + 50} ₽</span>
-            <Button className={classnames('button', [style.card__button])}>Заказать</Button>
-          </div>
-        </div>
+        <CardItem card={card} key={card.id} />
       ))}
     </div>
   );

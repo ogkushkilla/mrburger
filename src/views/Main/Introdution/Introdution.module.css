@@ -1,0 +1,45 @@
+.about {
+  position: relative;
+}
+
+.about__block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.about__content {
+  position: relative;
+  max-width: 515px;
+  font-size: 20px;
+}
+
+.about__text::before {
+  content: '';
+  position: absolute;
+  top: -34px;
+  left: 0;
+  width: 20%;
+  height: 3px;
+  background-color: #b70e0e;
+}
+
+.about__text::after {
+  content: '';
+  position: absolute;
+  bottom: -34px;
+  right: 0;
+  width: 20%;
+  height: 3px;
+  background-color: #b70e0e;
+}
+
+.about__img {
+  width: 100%;
+  border-radius: 30px;
+}
