@@ -1,0 +1,38 @@
+.special__card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.special__card--title {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.special__card--text {
+  padding: 30px 46px;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.special__card--button {
+  display: block;
+  margin: auto;
+  font-size: 36px;
+  font-weight: bold;
+  padding: 10px 67px;
+}
+
+.special__card:nth-child(2n) .special__card--image {
+  -webkit-box-ordinal-group: 3;
+  -ms-flex-order: 2;
+  order: 2;
+}

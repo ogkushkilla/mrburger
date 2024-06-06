@@ -27,6 +27,11 @@ a {
   text-decoration: none;
 }
 
+a.anchor {
+  position: relative;
+  top: -110px;
+}
+
 .no-scroll {
   overflow: hidden;
 }

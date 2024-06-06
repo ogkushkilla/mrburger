@@ -17,7 +17,7 @@ export const Hero = () => {
             <br />
             бургеры в Екатеринбурге
           </h1>
-          <a className="anchor" href="#menu">
+          <a href="#menu">
             <Button className={buttonClass}>Хочу бургер</Button>
           </a>
         </div>
