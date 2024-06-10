@@ -2,7 +2,7 @@ import { Button } from '../../../components/UI/Button/Button';
 import { Section } from '../../../components/UI/Section/Section';
 import style from './Delivery.module.css';
 
-export const Delivery = () => {
+export const Delivery = ({ handler }) => {
   return (
     <Section className={style.delivery}>
       <div className={style.delivery__block}>
@@ -14,9 +14,9 @@ export const Delivery = () => {
           <p className={style.delivery__subtitle}>
             все заказы поступившие раньше или позже указанного времени - доставляются в эти часы
           </p>
-          <a href="#menu">
-            <Button className={style.delivery__button}>Сделать заказ</Button>
-          </a>
+          <Button data-section="#menu" className={style.delivery__button} onClick={handler}>
+            Сделать заказ
+          </Button>
         </div>
       </div>
     </Section>

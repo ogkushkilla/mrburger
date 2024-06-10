@@ -8,14 +8,27 @@ import { Contacts } from './Contacts/Contacts';
 import { Footer } from '../Footer/Footer';
 
 export const Main = () => {
+  const smoothScroll = (event, link) => {
+    event.preventDefault();
+    let linkId = link.getAttribute('href');
+    console.log(linkId);
+    if (linkId === undefined || linkId === null) {
+      linkId = link.dataset.section;
+    }
+    document.querySelector(linkId).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
   return (
     <main className="main">
-      <Hero />
+      <Hero handler={e => smoothScroll(e, e.target)} />
       <a id="menu" className="anchor"></a>
-      <Menu />
+      <Menu handler={e => smoothScroll(e, e.target)} />
       <a id="about" className="anchor"></a>
       <Introdution />
-      <Delivery />
+      <Delivery handler={e => smoothScroll(e, e.target)} />
       <Features />
       <a id="special" className="anchor"></a>
       <Special />

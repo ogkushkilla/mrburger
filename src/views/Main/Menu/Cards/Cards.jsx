@@ -1,8 +1,9 @@
 import style from './Cards.module.css';
 import { CardItem } from '../CardItem/CardItem';
+import { useState } from 'react';
 
 export const Cards = () => {
-  const store = {
+  const [state] = useState({
     positions: [
       {
         id: 1,
@@ -56,11 +57,11 @@ export const Cards = () => {
         price: 179,
       },
     ],
-  };
+  });
 
   return (
     <div className={style.menu__cards}>
-      {store.positions.map((card, i) => (
+      {state.positions.map((card, _) => (
         <CardItem card={card} key={card.id} />
       ))}
     </div>

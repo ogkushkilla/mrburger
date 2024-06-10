@@ -3,7 +3,7 @@ import style from './Hero.module.css';
 import { Container } from '../../Container/Container';
 import { Button } from '../../../components/UI/Button/Button';
 
-export const Hero = () => {
+export const Hero = ({ handler }) => {
   const buttonClass = classNames(style.hero__button, 'button');
 
   return (
@@ -17,9 +17,9 @@ export const Hero = () => {
             <br />
             бургеры в Екатеринбурге
           </h1>
-          <a href="#menu">
-            <Button className={buttonClass}>Хочу бургер</Button>
-          </a>
+          <Button data-section="#menu" className={buttonClass} onClick={handler}>
+            Хочу бургер
+          </Button>
         </div>
       </Container>
     </div>

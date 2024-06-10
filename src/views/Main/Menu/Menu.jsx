@@ -5,9 +5,11 @@ import { Cards } from './Cards/Cards';
 
 export const Menu = () => {
   return (
-    <Section className={style.main__menu} title="Меню">
-      <Filter />
-      <Cards />
-    </Section>
+    <>
+      <Section className={style.main__menu} title="Меню">
+        <Filter />
+        <Cards />
+      </Section>
+    </>
   );
 };
