@@ -12,7 +12,12 @@ export const CardItem = ({ card }) => {
 
   const handleClick = chosenType => {
     setType(chosenType);
-    setPrice(card.price + 50);
+
+    if (chosenType === 'средний') {
+      setPrice(card.price);
+    } else {
+      setPrice(card.price + 50);
+    }
   };
 
   const showModal = () => {
