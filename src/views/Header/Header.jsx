@@ -1,5 +1,7 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Logo } from '../../components/Logo/Logo';
-import { Container } from '../../views/Container/Container';
+import { Container } from '../../components/Container/Container';
 import style from './Header.module.css';
 
 export const Header = () => {
@@ -15,6 +17,8 @@ export const Header = () => {
       block: 'start',
     });
   };
+
+  const [counter] = useState(0);
 
   return (
     <header className={style.header}>
@@ -38,9 +42,15 @@ export const Header = () => {
                 <a href="#contacts" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
                   Контакты
                 </a>
-                <a href="tel:+79999999999" className={style.navbar__phone}>
-                  +7-(999)-999-99-99
-                </a>
+                <Link to={`/cart`} className={style.navbar__cart}>
+                  <img className={style.cart__image} src="/img/cart.svg" alt="Корзина" />
+                  <span
+                    className={style.cart__counter}
+                    style={counter === 0 ? { display: 'none' } : { display: 'flex' }}
+                  >
+                    {counter}
+                  </span>
+                </Link>
               </div>
             </div>
           </nav>

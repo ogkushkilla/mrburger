@@ -11,10 +11,6 @@ export const Contacts = () => {
     script.async = true;
 
     document.querySelector(`#map`).appendChild(script);
-
-    return () => {
-      document.querySelector(`#map`).removeChild(document.querySelector('iframe'));
-    };
   }, []);
 
   return (

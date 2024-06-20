@@ -1,4 +1,4 @@
-import { Container } from '../../../views/Container/Container';
+import { Container } from '../../Container/Container';
 import style from './Section.module.css';
 
 export const Section = props => {

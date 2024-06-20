@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import style from './Hero.module.css';
-import { Container } from '../../Container/Container';
+import { Container } from '../../../components/Container/Container';
 import { Button } from '../../../components/UI/Button/Button';
 
 export const Hero = ({ handler }) => {
