@@ -13,19 +13,19 @@
 }
 
 .cart__form {
-  flex-basis: 70%;
+  flex-basis: 60%;
 }
 
 .cart__details {
   padding: 20px 0;
-  flex-basis: 30%;
+  flex-basis: 40%;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 .form__title,
 .details__title {
-  margin-bottom: 20px;
   font-size: 30px;
   text-align: center;
 }
@@ -135,7 +135,8 @@
 
 .details__item {
   padding: 20px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 80px 1fr 110px 35px;
   align-items: center;
   gap: 20px;
 }
@@ -163,6 +164,7 @@
 .details__item--counter {
   display: flex;
   align-items: center;
+  justify-content: center;
   border: 1px solid #d9d9d9;
   border-radius: 25px;
 }

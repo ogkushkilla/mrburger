@@ -1,10 +1,11 @@
+import { useRef } from 'react';
 import { Section } from '../../components/UI/Section/Section';
 import style from './Cart.module.css';
-import { store } from '../../store/store';
-import { useRef } from 'react';
 
 export const Cart = () => {
+  const products = JSON.parse(localStorage.getItem('products'));
   const counter = useRef();
+  let productPrice = 0;
 
   return (
     <Section title="Корзина">
@@ -39,70 +40,50 @@ export const Cart = () => {
           <h2 className={style.details__title}>Ваш заказ</h2>
 
           <div className={style.details__items}>
-            <div className={style.details__item}>
-              <img src={store.positions[0].image} alt={store.positions[0].name} />
+            {products.map((product, _) => {
+              productPrice += product.price;
 
-              <div className={style.item__wrapper}>
-                <h3>{store.positions[0].name}</h3>
-                <span>{store.positions[0].price} ₽</span>
-              </div>
+              return (
+                <div className={style.details__item} key={product.id}>
+                  <img src={product.image} alt={product.name} />
 
-              <div className={style['details__item--counter']}>
-                <button
-                  className={style.counter__decrease}
-                  onClick={() => {
-                    counter.current.stepDown();
-                  }}
-                >
-                  -
-                </button>
-                <input type="number" name="counter" id="counter" min={0} defaultValue={1} ref={counter} />
-                <button
-                  className={style.counter__increase}
-                  onClick={() => {
-                    counter.current.stepUp();
-                  }}
-                >
-                  +
-                </button>
-              </div>
+                  <div className={style.item__wrapper}>
+                    <h3>{product.name}</h3>
+                    <span>{product.price} ₽</span>
+                  </div>
 
-              <button className={style.delete}></button>
-            </div>
-            <div className={style.details__item}>
-              <img src={store.positions[1].image} alt={store.positions[1].name} />
+                  <div className={style['details__item--counter']}>
+                    <button
+                      className={style.counter__decrease}
+                      onClick={() => {
+                        counter.current.stepDown();
+                        if (product.amount > 1) {
+                          product.amount--;
+                        }
+                      }}
+                    >
+                      -
+                    </button>
+                    <input type="number" name="counter" id="counter" min={1} defaultValue={1} ref={counter} />
+                    <button
+                      className={style.counter__increase}
+                      onClick={() => {
+                        counter.current.stepUp();
+                        product.amount++;
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
 
-              <div className={style.item__wrapper}>
-                <h3>{store.positions[1].name}</h3>
-                <span>{store.positions[1].price} ₽</span>
-              </div>
-
-              <div className={style['details__item--counter']}>
-                <button
-                  className={style.counter__decrease}
-                  onClick={() => {
-                    counter.current.stepDown();
-                  }}
-                >
-                  -
-                </button>
-                <input type="number" name="counter" id="counter" min={1} defaultValue={1} ref={counter} />
-                <button
-                  className={style.counter__increase}
-                  onClick={() => {
-                    counter.current.stepUp();
-                  }}
-                >
-                  +
-                </button>
-              </div>
-
-              <button className={style.delete}></button>
-            </div>
+                  <button className={style.delete}></button>
+                </div>
+              );
+            })}
           </div>
 
           <div className={style.total}>
-            Итого: <span>{store.positions[0].price + store.positions[1].price} руб.</span>
+            Итого: <span>{productPrice} руб.</span>
           </div>
         </div>
       </div>

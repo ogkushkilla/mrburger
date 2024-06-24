@@ -1,38 +1,37 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import classnames from 'classnames';
 import style from './CardItem.module.css';
 import { Button } from '../../../../components/UI/Button/Button';
-import { Modal } from '../../../../components/UI/Modal/Modal';
+import { Modal } from '../../../Modal/Modal';
 
-export const CardItem = ({ card }) => {
-  const [visibility, setVisibility] = useState(false);
+export const CardItem = ({ product }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [type, setType] = useState('средний');
-  const [price, setPrice] = useState(card.price);
+  const [price, setPrice] = useState(product.price);
 
   const handleClick = chosenType => {
     setType(chosenType);
 
     if (chosenType === 'средний') {
-      setPrice(card.price);
+      setPrice(product.price);
     } else {
-      setPrice(card.price + 50);
+      setPrice(product.price + 50);
     }
   };
 
-  const showModal = () => {
-    setVisibility(true);
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  const hideModal = () => {
-    setVisibility(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <div className={style.menu__card}>
-      <img src={card.image} className={style.card__image} />
-      <h3 className={style.card__title}>{card.name}</h3>
-      <p className={style.card__text}>{card.composition}</p>
+      <img src={product.image} className={style.card__image} />
+      <h3 className={style.card__title}>{product.name}</h3>
+      <p className={style.card__text}>{product.composition}</p>
       <div className={style.card__choose}>
         <button
           onClick={e => handleClick(e.target.textContent)}
@@ -49,14 +48,11 @@ export const CardItem = ({ card }) => {
       </div>
       <div className={style.card__value}>
         <span className={style.card__price}>{price} ₽</span>
-        <Button className={classnames('button', [style.card__button])} onClick={showModal}>
+        <Button className={classnames('button', [style.card__button])} onClick={openModal}>
           Заказать
         </Button>
-        {createPortal(
-          <Modal data={card} visible={visibility} onClose={hideModal} type={type} price={price} />,
-          document.body,
-        )}
       </div>
+      {isModalOpen && <Modal product={product} closeModal={closeModal} type={type} price={price} />}
     </div>
   );
 };

@@ -24,7 +24,7 @@ export const Menu = () => {
     <>
       <Section className={style.main__menu} title="Меню">
         <Filter filters={store.filters} updateFilter={handleFilterUpdate} />
-        <Cards cards={filteredCards} />
+        <Cards products={filteredCards} />
       </Section>
     </>
   );
