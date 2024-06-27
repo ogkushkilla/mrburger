@@ -1,0 +1,81 @@
+.details__item {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 80px 1fr 110px 35px;
+  align-items: center;
+  gap: 20px;
+}
+
+.details__item:not(:last-child) {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.details__item img {
+  display: block;
+  width: 80px;
+}
+
+.item__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item__wrapper span {
+  font-weight: 600;
+  color: #b70e0e;
+}
+
+.details__item--counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 25px;
+}
+
+.details__item--counter input,
+.details__item--counter button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #ffffff;
+}
+
+.details__item--counter input {
+  width: 50px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  text-align: center;
+  outline: none;
+}
+
+.details__item--counter button {
+  cursor: pointer;
+}
+
+button.counter__decrease {
+  border-right: 1px solid #d9d9d9;
+  border-radius: 25px 0 0 25px;
+}
+
+button.counter__increase {
+  border-left: 1px solid #d9d9d9;
+  border-radius: 0 25px 25px 0;
+}
+
+.details__item--counter:hover {
+  border-color: #b70e0e;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.25);
+}
+
+.delete {
+  width: 35px;
+  height: 35px;
+  border: none;
+  background-image: url('/img/delete.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #ffffff;
+  cursor: pointer;
+}

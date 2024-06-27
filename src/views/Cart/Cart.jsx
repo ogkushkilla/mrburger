@@ -1,11 +1,22 @@
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Section } from '../../components/UI/Section/Section';
 import style from './Cart.module.css';
+import { CartItem } from './CartItem/CartItem';
 
 export const Cart = () => {
-  const products = JSON.parse(localStorage.getItem('products'));
-  const counter = useRef();
-  let productPrice = 0;
+  const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+
+    if (products.length) {
+      const productsPrices = products.reduce((acc, item) => acc + item.price * item.amount, 0);
+
+      setProducts(products);
+      setTotalPrice(productsPrices);
+    }
+  }, []);
 
   return (
     <Section title="Корзина">
@@ -40,50 +51,23 @@ export const Cart = () => {
           <h2 className={style.details__title}>Ваш заказ</h2>
 
           <div className={style.details__items}>
-            {products.map((product, _) => {
-              productPrice += product.price;
-
-              return (
-                <div className={style.details__item} key={product.id}>
-                  <img src={product.image} alt={product.name} />
-
-                  <div className={style.item__wrapper}>
-                    <h3>{product.name}</h3>
-                    <span>{product.price} ₽</span>
-                  </div>
-
-                  <div className={style['details__item--counter']}>
-                    <button
-                      className={style.counter__decrease}
-                      onClick={() => {
-                        counter.current.stepDown();
-                        if (product.amount > 1) {
-                          product.amount--;
-                        }
-                      }}
-                    >
-                      -
-                    </button>
-                    <input type="number" name="counter" id="counter" min={1} defaultValue={1} ref={counter} />
-                    <button
-                      className={style.counter__increase}
-                      onClick={() => {
-                        counter.current.stepUp();
-                        product.amount++;
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <button className={style.delete}></button>
-                </div>
-              );
-            })}
+            {products.length ? (
+              products.map((product, _) => (
+                <CartItem
+                  key={product.id}
+                  products={products}
+                  product={product}
+                  totalPrice={totalPrice}
+                  setTotalPrice={setTotalPrice}
+                />
+              ))
+            ) : (
+              <div>Корзина пуста</div>
+            )}
           </div>
 
           <div className={style.total}>
-            Итого: <span>{productPrice} руб.</span>
+            Итого: <span>{totalPrice} руб.</span>
           </div>
         </div>
       </div>

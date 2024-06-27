@@ -18,9 +18,13 @@ export const Modal = ({ product, closeModal, type, price }) => {
     e.preventDefault();
 
     const products = JSON.parse(localStorage.getItem('products')) || [];
-    const currentProduct = { ...product, price };
+    const currentProduct = products.find(item => item.id === product.id);
 
-    products.push(currentProduct);
+    if (currentProduct) {
+      currentProduct.amount += 1;
+    } else {
+      products.push({ ...product, price, amount: 1 });
+    }
 
     localStorage.setItem('products', JSON.stringify(products));
   };
