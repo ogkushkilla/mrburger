@@ -11,10 +11,10 @@ export const Cart = () => {
     const products = JSON.parse(localStorage.getItem('products')) || [];
 
     if (products.length) {
-      const productsPrices = products.reduce((acc, item) => acc + item.price * item.amount, 0);
+      const productsTotalPrice = products.reduce((acc, item) => acc + item.price * item.amount, 0);
 
       setProducts(products);
-      setTotalPrice(productsPrices);
+      setTotalPrice(productsTotalPrice);
     }
   }, []);
 
@@ -56,6 +56,7 @@ export const Cart = () => {
                 <CartItem
                   key={product.id}
                   products={products}
+                  setProducts={setProducts}
                   product={product}
                   totalPrice={totalPrice}
                   setTotalPrice={setTotalPrice}

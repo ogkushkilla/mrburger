@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     path: '/',
     element: (
       <>
-        <Header />
+        <Header isEmpty={false} />
         <Main />
       </>
     ),
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     path: '/cart',
     element: (
       <>
-        <Header />
+        <Header isEmpty={true} />
         <Cart />
       </>
     ),

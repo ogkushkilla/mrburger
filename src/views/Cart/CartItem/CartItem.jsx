@@ -1,15 +1,21 @@
 import { useRef } from 'react';
 import style from './CartItem.module.css';
 
-export const CartItem = ({ products, product, totalPrice, setTotalPrice }) => {
-  const counter = useRef();
+export const CartItem = ({ products, setProducts, product, totalPrice, setTotalPrice }) => {
+  const counter = useRef(null);
 
   const deleteProduct = product => {
     const currentProductIndex = products.indexOf(product);
 
     if (currentProductIndex > -1) {
+      const cartProducts = products.filter(item => item.id !== product.id);
+      const productsTotalPrice = cartProducts.reduce((acc, item) => acc + item.price * item.amount, 0);
+
       products.splice(currentProductIndex, 1);
       localStorage.setItem('products', JSON.stringify(products));
+
+      setProducts(cartProducts);
+      setTotalPrice(productsTotalPrice);
     }
   };
 
@@ -19,6 +25,7 @@ export const CartItem = ({ products, product, totalPrice, setTotalPrice }) => {
 
       <div className={style.item__wrapper}>
         <h3>{product.name}</h3>
+        <p>{product.type}</p>
         <span>{product.price} ₽</span>
       </div>
 
