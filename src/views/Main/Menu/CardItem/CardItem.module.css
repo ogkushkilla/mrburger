@@ -97,3 +97,26 @@
 .choosen__type.active {
   background-color: #000000;
 }
+
+.product__params {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  border-radius: 50px;
+  font-size: 24px;
+  background-color: #d9d9d9;
+}
+
+.product__params button {
+  padding: 12px;
+  width: 30%;
+  font-size: 24px;
+  border-radius: 50px;
+  background-color: transparent;
+  color: inherit;
+}
+
+.product__params button:hover {
+  background-color: transparent;
+}
