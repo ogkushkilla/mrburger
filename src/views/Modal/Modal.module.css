@@ -118,8 +118,17 @@
   cursor: pointer;
 }
 
+.energy__titile {
+  margin-top: 10px;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #6a6a6a;
+}
+
 .energy__info {
-  margin: 20px 50px;
+  margin: 5px 50px 20px;
   padding: 15px;
   display: flex;
   justify-content: center;
@@ -240,9 +249,4 @@
 
 .additional__info .info__item input[type='checkbox']:disabled + label::after {
   background-color: #e9ecef;
-}
-
-.price {
-  font-size: 14px;
-  color: #979797;
 }

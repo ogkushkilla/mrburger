@@ -49,14 +49,6 @@ export const Contacts = () => {
         </div>
         <div id="map" className={style.contacts__map}></div>
       </div>
-      <div className={style.contacts__form}>
-        <h3 className={style.form__title}>Будьте в курсе всех новинок</h3>
-        <p className={style.form__subtitle}>Оставьте нам свой e-mail чтобы быть в курсе всех новостей</p>
-        <form action="#" className={style.form}>
-          <input className={style.form__email} type="email" name="email" id="email" placeholder="Ваш e-mail:" />
-          <input className={style.form__button} type="submit" value={String.fromCharCode(0x2192)} />
-        </form>
-      </div>
     </Section>
   );
 };

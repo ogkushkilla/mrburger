@@ -1,4 +1,5 @@
 .contacts__block {
+  margin-bottom: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8,11 +9,11 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-bottom: 80px;
+  gap: 10%;
 }
 
 .contacts__content {
-  max-width: 324px;
+  width: 50%;
 }
 
 .contacts__address,
@@ -29,52 +30,10 @@
 }
 
 .contacts__map {
-  width: 600px;
+  width: 50%;
   height: 425px;
-}
-
-.contacts__form {
-  text-align: center;
 }
 
 .social__link {
   margin-right: 20px;
-}
-
-.form {
-  position: relative;
-}
-
-.form__title {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 21px;
-}
-
-.form__subtitle {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.form__email {
-  width: 800px;
-  height: 60px;
-  border: 1px solid #000000;
-  border-radius: 50px;
-  font-size: 24px;
-  padding-left: 28px;
-  outline: none;
-}
-
-.form__button {
-  position: absolute;
-  right: 180px;
-  height: 60px;
-  font-size: 60px;
-  line-height: 60px;
-  border: none;
-  background-color: transparent;
-  outline: none;
-  cursor: pointer;
 }
