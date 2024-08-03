@@ -1,16 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API_URI, PREFIX } from '../../const';
 
-export const fetchCart = createAsyncThunk('fetchCart', async ({ id, quantity }) => {
-  const response = await fetch(`${API_URI}${PREFIX}/cart`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id, quantity }),
-  });
+export const fetchCart = createAsyncThunk('fetchCart', async () => {
+  const response = await fetch(`${API_URI}${PREFIX}/cart/items`);
 
-  if (!response.ok) throw new Error('Cannot fetch the cart');
+  if (!response.ok) throw new Error('Cannot fetch cart');
 
   return await response.json();
 });

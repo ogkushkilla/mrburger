@@ -1,13 +1,13 @@
+.details__wrapper:not(:last-child) {
+  border-bottom: 1px solid #d9d9d9;
+}
+
 .details__item {
   padding: 20px;
   display: grid;
   grid-template-columns: 80px 1fr 110px 35px;
   align-items: center;
   gap: 20px;
-}
-
-.details__item:not(:last-child) {
-  border-bottom: 1px solid #d9d9d9;
 }
 
 .details__item img {
@@ -78,4 +78,23 @@ button.counter__increase {
   background-position: center;
   background-color: #ffffff;
   cursor: pointer;
+}
+
+.additionals {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.additionals__item {
+  display: flex;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.additionals__item .item__price {
+  font-size: 14px;
+  font-weight: 600;
+  color: #b70e0e;
 }

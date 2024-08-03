@@ -4,22 +4,32 @@ import style from './Cart.module.css';
 import { CartItem } from './CartItem/CartItem';
 import { Button } from '../../components/UI/Button/Button';
 import { OrderModal } from '../Order/OrderModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart } from '../../redux/thunks/fetchCart';
 
 export const Cart = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const { items: products, status: cartStatus } = useSelector(state => state.cart);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isOrdered, setIsOrdered] = useState(false);
 
   useEffect(() => {
-    const products = JSON.parse(localStorage.getItem('products')) || [];
-
-    if (products.length) {
-      const productsTotalPrice = products.reduce((acc, item) => acc + item.price * item.amount, 0);
-
-      setProducts(products);
-      setTotalPrice(productsTotalPrice);
+    if (cartStatus === 'idle') {
+      dispatch(fetchCart());
     }
-  }, []);
+
+    let productsTotalPrice = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const additionals = products.map(product =>
+      product.additionals.map(item => item.price).reduce((acc, price) => acc + price, 0),
+    );
+
+    if (additionals.length) {
+      const additionalsPrice = additionals.reduce((acc, price) => acc + price, 0);
+      productsTotalPrice += additionalsPrice;
+    }
+
+    setTotalPrice(productsTotalPrice);
+  }, [products, cartStatus, dispatch]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -87,14 +97,7 @@ export const Cart = () => {
             <div className={style.details__items}>
               {products.length ? (
                 products.map((product, _) => (
-                  <CartItem
-                    key={product.id}
-                    products={products}
-                    setProducts={setProducts}
-                    product={product}
-                    totalPrice={totalPrice}
-                    setTotalPrice={setTotalPrice}
-                  />
+                  <CartItem key={product.id} product={product} totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
                 ))
               ) : (
                 <div>Корзина пуста</div>

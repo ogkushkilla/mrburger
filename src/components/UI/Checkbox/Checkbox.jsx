@@ -1,30 +1,41 @@
 import style from './Checkbox.module.css';
 
-export const Checkbox = ({ id, className, productTitle, price, callback, currentPrice }) => {
+export const Checkbox = ({
+  id,
+  className,
+  productTitle,
+  weight,
+  price,
+  setCurrentPrice,
+  productPrice,
+  checkedAdditionals,
+  setCheckedAdditionals,
+}) => {
   const handleChange = ({ target }) => {
     const value = parseInt(target.value);
 
     if (target.checked && price) {
-      currentPrice += value;
-      callback(currentPrice);
+      productPrice += value;
+      setCurrentPrice(productPrice);
+      checkedAdditionals.push({ id, price, title: productTitle, weight });
+      setCheckedAdditionals(checkedAdditionals);
     } else if (price) {
-      currentPrice -= value;
-      callback(currentPrice);
+      productPrice -= value;
+      setCurrentPrice(productPrice);
+      setCheckedAdditionals(checkedAdditionals.filter(item => item.price !== value));
     }
   };
 
   return (
     <div className={className}>
-      <input type="checkbox" id={id} value={price ? price : ''} onChange={e => handleChange(e)} />
+      <input type="checkbox" id={id} value={price} onChange={e => handleChange(e)} />
       <label htmlFor={id}>
         {productTitle}
-        {price ? (
+        {
           <span className={style.price}>
             +<span>{price}</span>₽
           </span>
-        ) : (
-          <></>
-        )}
+        }
       </label>
     </div>
   );

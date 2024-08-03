@@ -1,14 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import style from './Modal.module.css';
 import classnames from 'classnames';
 import { Checkbox } from '../../components/UI/Checkbox/Checkbox';
-import { useDispatch } from 'react-redux';
-import { fetchCart } from '../../redux/thunks/fetchCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart } from '../../redux/thunks/addItemToCart';
+import { fetchAdditionals } from '../../redux/thunks/fetchAdditionals';
 
 export const Modal = ({ product, closeModal, type, price }) => {
   const dispatch = useDispatch();
+  const { items: additionals, status: additionalsStatus } = useSelector(state => state.additionals);
+  const [currentPrice, setCurrentPrice] = useState(price);
+  const [checkedAdditionals, setCheckedAdditionals] = useState([]);
   const popupRef = useRef(null);
+
+  useEffect(() => {
+    if (additionalsStatus === 'idle') {
+      dispatch(fetchAdditionals());
+    }
+  }, [additionalsStatus, dispatch]);
 
   const handleClick = e => {
     const target = e.target;
@@ -20,7 +30,7 @@ export const Modal = ({ product, closeModal, type, price }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(fetchCart({ id: product.id, quantity: 1 }));
+    dispatch(addItemToCart({ id: product.id, type, quantity: 1, additionals: checkedAdditionals }));
     closeModal();
   };
 
@@ -41,7 +51,7 @@ export const Modal = ({ product, closeModal, type, price }) => {
           </span>
           <img className={style.popup__image} src={product.image} alt="order" />
           <h2 className={classnames([style.order__title], style['order__product--title'])}>{product.title}</h2>
-          <span className={classnames([style.order__price], style['order__product--price'])}>{price} ₽</span>
+          <span className={classnames([style.order__price], style['order__product--price'])}>{currentPrice} ₽</span>
           <span className={style.order__type}>
             {type}, {type === 'средний' ? product.weight : product.extraWeight}г.
           </span>
@@ -73,9 +83,24 @@ export const Modal = ({ product, closeModal, type, price }) => {
             </div>
             <div className={style.additional__info}>
               <h3>Дополнительно:</h3>
-              <Checkbox className={style.info__item} id={'option1'} productTitle={'Картошка фри (150г)'} price={130} />
-              <Checkbox className={style.info__item} id={'option2'} productTitle={'Соус сырный (50г)'} price={50} />
-              <Checkbox className={style.info__item} id={'option3'} productTitle={'Халапенью (50г)'} price={70} />
+              {additionals.length ? (
+                additionals.map(product => (
+                  <Checkbox
+                    key={product.id}
+                    id={product.id}
+                    className={style.info__item}
+                    productTitle={`${product.title} (${product.weight}г)`}
+                    weight={product.weight}
+                    price={product.price}
+                    productPrice={currentPrice}
+                    setCurrentPrice={setCurrentPrice}
+                    checkedAdditionals={checkedAdditionals}
+                    setCheckedAdditionals={setCheckedAdditionals}
+                  />
+                ))
+              ) : (
+                <div>Загрузка...</div>
+              )}
             </div>
             <input className={style.order__button} type="submit" value="Добавить в корзину" />
           </form>
