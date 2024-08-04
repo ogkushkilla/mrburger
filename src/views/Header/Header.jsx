@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../../components/Logo/Logo';
 import { Container } from '../../components/Container/Container';
 import style from './Header.module.css';
+import { useSelector } from 'react-redux';
 
-export const Header = ({ isEmpty }) => {
+export const Header = ({ isEmpty, hideCart }) => {
+  const cartItemsCount = useSelector(state => state.cart.items).length;
   const smoothScroll = (event, link) => {
     event.preventDefault();
     let linkId = link.getAttribute('href');
@@ -18,8 +19,6 @@ export const Header = ({ isEmpty }) => {
     });
   };
 
-  const [counter] = useState(0);
-
   return (
     <header className={style.header}>
       <div className={style.menu}>
@@ -29,31 +28,35 @@ export const Header = ({ isEmpty }) => {
               <div className={style.navbar__logo}>
                 <Logo />
               </div>
-              {!isEmpty && (
-                <div className={style.navbar__menu}>
-                  <a href="#about" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
-                    О нас
-                  </a>
-                  <a href="#menu" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
-                    Меню
-                  </a>
-                  <a href="#special" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
-                    Акции
-                  </a>
-                  <a href="#contacts" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
-                    Контакты
-                  </a>
+              <div className={style.navbar__menu}>
+                {!isEmpty && (
+                  <>
+                    <a href="#about" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
+                      О нас
+                    </a>
+                    <a href="#menu" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
+                      Меню
+                    </a>
+                    <a href="#special" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
+                      Акции
+                    </a>
+                    <a href="#contacts" className={style.navbar__link} onClick={e => smoothScroll(e, e.target)}>
+                      Контакты
+                    </a>
+                  </>
+                )}
+                {!hideCart && (
                   <Link to={`/cart`} className={style.navbar__cart}>
                     <img className={style.cart__image} src="/img/cart.svg" alt="Корзина" />
                     <span
                       className={style.cart__counter}
-                      style={counter === 0 ? { display: 'none' } : { display: 'flex' }}
+                      style={cartItemsCount === 0 ? { display: 'none' } : { display: 'flex' }}
                     >
-                      {counter}
+                      {cartItemsCount}
                     </span>
                   </Link>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </nav>
         </Container>

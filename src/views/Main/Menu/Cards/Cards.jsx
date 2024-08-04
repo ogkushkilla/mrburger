@@ -6,7 +6,7 @@ import { CardItem } from '../CardItem/CardItem';
 
 export const Cards = () => {
   const dispatch = useDispatch();
-  const { items: products } = useSelector(state => state.products);
+  const products = useSelector(state => state.products.items);
   const { categories, activeCategory } = useSelector(state => state.categories);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const Cards = () => {
   return (
     <div className={style.menu__cards}>
       {products.length ? (
-        products.map((product, _) => <CardItem key={product.id} products={products} product={product} />)
+        products.map((product, _) => <CardItem key={product.id} product={product} />)
       ) : (
         <div>Загрузка...</div>
       )}

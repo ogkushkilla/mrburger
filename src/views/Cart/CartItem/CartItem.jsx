@@ -14,7 +14,9 @@ export const CartItem = ({ product, totalPrice, setTotalPrice }) => {
 
         <div className={style.item__wrapper}>
           <h3>{product.title}</h3>
-          <p>{product.type}</p>
+          <p>
+            {product.type}, {product.weight}г
+          </p>
           <span>{product.price} ₽</span>
         </div>
 
@@ -64,7 +66,18 @@ export const CartItem = ({ product, totalPrice, setTotalPrice }) => {
           </button>
         </div>
 
-        {/* <button className={style.delete} onClick={() => deleteProduct(product)}></button> */}
+        <button
+          className={style.delete}
+          onClick={() =>
+            dispatch(
+              addItemToCart({
+                id: product.id,
+                type: product.type,
+                quantity: 0,
+              }),
+            )
+          }
+        ></button>
       </div>
 
       {product.additionals ? (

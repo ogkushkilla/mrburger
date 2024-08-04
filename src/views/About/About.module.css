@@ -1,0 +1,40 @@
+.about {
+  position: relative;
+}
+
+.about__block {
+  display: block;
+}
+
+.about__content {
+  position: relative;
+  font-size: 20px;
+}
+
+.about__text::before {
+  content: '';
+  position: absolute;
+  top: -34px;
+  left: 0;
+  width: 20%;
+  height: 3px;
+  background-color: #b70e0e;
+}
+
+.about__text::after {
+  content: '';
+  position: absolute;
+  bottom: -34px;
+  right: 0;
+  width: 20%;
+  height: 3px;
+  background-color: #b70e0e;
+}
+
+.about__img {
+  margin-bottom: 70px;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 30px;
+}

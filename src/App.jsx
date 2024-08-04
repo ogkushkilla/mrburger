@@ -2,14 +2,29 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Header } from './views/Header/Header';
 import { Main } from './views/Main/Main';
 import { Cart } from './views/Cart/Cart';
+import { useEffect } from 'react';
+import { fetchCart } from './redux/thunks/fetchCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { About } from './views/About/About';
+import { Footer } from './views/Footer/Footer';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
       <>
-        <Header isEmpty={false} />
+        <Header isEmpty={false} hideCart={false} />
         <Main />
+      </>
+    ),
+  },
+  {
+    path: '/about',
+    element: (
+      <>
+        <Header isEmpty={true} hideCart={false} />
+        <About />
+        <Footer />
       </>
     ),
   },
@@ -17,7 +32,7 @@ const router = createBrowserRouter([
     path: '/cart',
     element: (
       <>
-        <Header isEmpty={true} />
+        <Header isEmpty={true} hideCart={true} />
         <Cart />
       </>
     ),
@@ -25,6 +40,15 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const dispatch = useDispatch();
+  const { status: cartStatus } = useSelector(state => state.cart);
+
+  useEffect(() => {
+    if (cartStatus === 'idle') {
+      dispatch(fetchCart());
+    }
+  });
+
   return <RouterProvider router={router} />;
 };
 

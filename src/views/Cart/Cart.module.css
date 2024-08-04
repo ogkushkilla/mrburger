@@ -13,15 +13,15 @@
 }
 
 .cart__form {
-  flex-basis: 60%;
+  width: 100%;
 }
 
 .cart__details {
   padding: 20px 0;
-  flex-basis: 40%;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 40%;
 }
 
 .form__title,
@@ -160,6 +160,7 @@
 .details__items {
   display: flex;
   flex-direction: column;
+  height: 100%;
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9;
 }
@@ -176,7 +177,8 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .address {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 20px;
 }
 
@@ -198,4 +200,17 @@ input[type='number']::-webkit-outer-spin-button {
   padding: 12px 50px;
   font-size: 24px;
   font-weight: bold;
+}
+
+.cart__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 100%;
+}
+
+.cart__empty span {
+  font-weight: 600;
 }

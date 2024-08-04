@@ -5,19 +5,17 @@ import { CartItem } from './CartItem/CartItem';
 import { Button } from '../../components/UI/Button/Button';
 import { OrderModal } from '../Order/OrderModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart } from '../../redux/thunks/fetchCart';
+import { sendOrder } from '../../redux/thunks/sendOrder';
 
 export const Cart = () => {
   const dispatch = useDispatch();
-  const { items: products, status: cartStatus } = useSelector(state => state.cart);
+  const products = useSelector(state => state.cart.items);
+  const { status: orderStatus } = useSelector(state => state.order);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isOrdered, setIsOrdered] = useState(false);
+  const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {
-    if (cartStatus === 'idle') {
-      dispatch(fetchCart());
-    }
-
     let productsTotalPrice = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
     const additionals = products.map(product =>
       product.additionals.map(item => item.price).reduce((acc, price) => acc + price, 0),
@@ -29,11 +27,15 @@ export const Cart = () => {
     }
 
     setTotalPrice(productsTotalPrice);
-  }, [products, cartStatus, dispatch]);
+  }, [products, dispatch]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    setIsOrdered(true);
+
+    dispatch(sendOrder({ ...orderData, products }));
+    if (orderStatus === 'success') {
+      setIsOrdered(true);
+    }
   };
 
   return (
@@ -48,26 +50,71 @@ export const Cart = () => {
                 <label htmlFor="name" aria-required="true">
                   Введите Ваше имя
                 </label>
-                <input id="name" type="text" placeholder="Имя" autoComplete="false" required />
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Имя"
+                  autoComplete="false"
+                  required
+                  onChange={e => setOrderData({ ...orderData, name: e.target.value })}
+                />
               </div>
 
               <div className={style.form__item}>
                 <label htmlFor="phone" aria-required="true">
                   Введите Ваш номер телефона
                 </label>
-                <input id="phone" type="phone" placeholder="+7(9XX)-XXX-XX-XX" autoComplete="false" required />
+                <input
+                  id="phone"
+                  type="phone"
+                  placeholder="+7(9XX)-XXX-XX-XX"
+                  autoComplete="false"
+                  required
+                  onChange={e => setOrderData({ ...orderData, phone: e.target.value })}
+                />
               </div>
 
               <div className={style.form__item}>
                 <label htmlFor="address" aria-required="true">
                   Введите адрес доставки
                 </label>
-                <input id="street" type="text" placeholder="Улица и дом" autoComplete="false" required />
+                <input
+                  id="street"
+                  type="text"
+                  placeholder="Улица и дом"
+                  autoComplete="false"
+                  required
+                  onChange={e => setOrderData({ ...orderData, street: e.target.value })}
+                />
                 <div className={style.address}>
-                  <input type="text" id="apartment" placeholder="Квартира" required />
-                  <input type="text" id="housePhone" placeholder="Домофон" required />
-                  <input type="text" id="entrance" placeholder="Подъезд" required />
-                  <input type="text" id="floor" placeholder="Этаж" required />
+                  <input
+                    type="text"
+                    id="apartment"
+                    placeholder="Квартира"
+                    required
+                    onChange={e => setOrderData({ ...orderData, apartment: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    id="housePhone"
+                    placeholder="Домофон"
+                    required
+                    onChange={e => setOrderData({ ...orderData, housePhone: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    id="entrance"
+                    placeholder="Подъезд"
+                    required
+                    onChange={e => setOrderData({ ...orderData, entrance: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    id="floor"
+                    placeholder="Этаж"
+                    required
+                    onChange={e => setOrderData({ ...orderData, floor: e.target.value })}
+                  />
                 </div>
               </div>
 
@@ -75,7 +122,13 @@ export const Cart = () => {
                 <label htmlFor="comment" aria-required="false">
                   Комментарий к заказу
                 </label>
-                <textarea id="comment" placeholder="Комментарий" autoComplete="false" rows={5}></textarea>
+                <textarea
+                  id="comment"
+                  placeholder="Комментарий"
+                  autoComplete="false"
+                  rows={5}
+                  onChange={e => setOrderData({ ...orderData, comment: e.target.value })}
+                ></textarea>
               </div>
 
               <div className={`${style.form__item} ${style['form__item--checkbox']}`}>
@@ -86,7 +139,11 @@ export const Cart = () => {
               </div>
             </div>
 
-            <Button className={style.submit__button} type="submit">
+            <Button
+              className={style.submit__button}
+              type="submit"
+              disabled={products.length || orderStatus === 'loading' ? '' : 'disabled'}
+            >
               Отправить
             </Button>
           </form>
@@ -100,13 +157,20 @@ export const Cart = () => {
                   <CartItem key={product.id} product={product} totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
                 ))
               ) : (
-                <div>Корзина пуста</div>
+                <div className={style.cart__empty}>
+                  <img src="/img/empty-cart.svg" alt="Корзина пуста" />
+                  <span>{'Вы ничего не добавили в корзину :('}</span>
+                </div>
               )}
             </div>
 
-            <div className={style.total}>
-              Итого: <span>{totalPrice} руб.</span>
-            </div>
+            {products.length ? (
+              <div className={style.total}>
+                Итого: <span>{totalPrice} руб.</span>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </Section>

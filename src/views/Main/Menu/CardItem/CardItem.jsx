@@ -2,10 +2,16 @@ import { useState } from 'react';
 import style from './CardItem.module.css';
 import { Button } from '../../../../components/UI/Button/Button';
 import { Modal } from '../../../Modal/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart } from '../../../../redux/thunks/addItemToCart';
 
 export const CardItem = ({ product }) => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [type, setType] = useState('средний');
+  const cartItems = useSelector(state => state.cart.items);
+  const currentProduct = cartItems.filter(item => item.id === product.id && item.type === type);
+  const isProductAddedToCart = currentProduct.length > 0;
 
   const handleClick = chosenType => {
     setType(chosenType);
@@ -40,20 +46,43 @@ export const CardItem = ({ product }) => {
       </div>
       <div className={style.card__value}>
         <span className={style.card__price}>{type === 'средний' ? product.price : product.extraPrice} ₽</span>
-        {/* {isAddedToCart ? (
+        {isProductAddedToCart ? (
           <div className={style.product__params}>
-            <Button className={style.decrease}>-</Button>
-            {productAmount}
-            <Button className={style.increase}>+</Button>
+            <Button
+              className={style.decrease}
+              onClick={() => {
+                dispatch(
+                  addItemToCart({
+                    id: product.id,
+                    type: product.type,
+                    quantity: currentProduct[0].quantity - 1,
+                  }),
+                );
+              }}
+            >
+              -
+            </Button>
+            {currentProduct[0].quantity}
+            <Button
+              className={style.increase}
+              onClick={() => {
+                dispatch(
+                  addItemToCart({
+                    id: product.id,
+                    type: product.type,
+                    quantity: currentProduct[0].quantity + 1,
+                  }),
+                );
+              }}
+            >
+              +
+            </Button>
           </div>
         ) : (
           <Button className={style.card__button} onClick={openModal}>
             Заказать
           </Button>
-        )} */}
-        <Button className={style.card__button} onClick={openModal}>
-          Заказать
-        </Button>
+        )}
       </div>
       {isModalOpen && (
         <Modal
